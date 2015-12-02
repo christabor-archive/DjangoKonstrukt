@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% load bootstrap3 %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>
+            <span class="label label-default">model</span>
+            {{ model.name }}
+            <small>#{{ model.pk }}</small>
+        </h1>
+        <h3>Fields in this Model</h3>
+        <ul>
+        {% for field in model.fieldvalue_set.all %}
+        <li>
+            <strong>{{ field.key }}:</strong>
+            {{ field.value }}
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

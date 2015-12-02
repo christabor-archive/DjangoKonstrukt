@@ -1,0 +1,101 @@
+{% extends "index.html" %}
+{% load bootstrap3 %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <h2>Existing</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#1" data-toggle="tab">Views</a></li>
+                <li><a href="#2" data-toggle="tab">Models</a></li>
+                <li><a href="#3" data-toggle="tab">Model Fields</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="1">
+                    <br>
+                    <div class="well clearfix">
+                        <h3>Your Views</h3>
+                        {% if all_views %}
+                        <ul>
+                            {% for view in all_views %}
+                            <li>
+                                <a href="{% url 'konstrukt.views.view_view' view.pk %}">{{ view.name|classy }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No views created yet.</p>
+                        {% endif %}
+                        <hr>
+                        <h3>Add new View</h3>
+                        {% with view_form as form %}
+                        <form action="." method="POST" role="form">
+                            {% csrf_token %}
+                            <input type="hidden" name="add-model" value="true">
+                            {% include "partials/generic-form.html" %}
+                        </form>
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="2">
+                    <br>
+                    <div class="well clearfix">
+                        <h3>Your Models</h3>
+                        {% if all_models %}
+                        <ul>
+                            {% for model in all_models %}
+                            <li>
+                                <a href="{% url 'konstrukt.views.view_model' model.pk %}">{{ model.name|classy }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No models created yet.</p>
+                        {% endif %}
+
+                        <hr>
+                        <h3>Add new Model</h3>
+                        {% with model_form as form %}
+                        <form action="." method="POST" role="form">
+                            {% csrf_token %}
+                            <input type="hidden" name="add-model" value="true">
+                            {% include "partials/generic-form.html" %}
+                        </form>
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="3">
+                    <h3>Your Model Fields</h3>
+                    {% if all_fields %}
+                    <ul>
+                        {% for field in all_fields %}
+                        <li>{{ field.key }}: {{ field.value }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No model fields created yet.</p>
+                    {% endif %}
+                    <hr>
+                    <h3>Add new Model Field</h3>
+                    {% include "partials/add-key-form.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row text-center">
+    <div class="col-md-12">
+        <div class="well">
+            <h3>Export as an app!</h3>
+            <p class="btn btn-lg btn-primary">Export!</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

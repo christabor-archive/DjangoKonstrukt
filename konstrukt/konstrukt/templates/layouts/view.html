@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% load bootstrap3 %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>
+            <span class="label label-default">view</span>
+            {{ view.name }}
+            <small>#{{ view.pk }}</small>
+        </h1>
+        <h3>Hook up some models to this view:</h3>
+        <form action="." method="POST" role="form">
+            {% csrf_token %}
+            {% include "partials/generic-form.html" %}
+        </form>
+    </div>
+</div>
+{% endblock %}
